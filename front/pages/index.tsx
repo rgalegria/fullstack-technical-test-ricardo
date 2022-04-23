@@ -1,7 +1,7 @@
 import Head from "next/head";
 import algoliasearch from "algoliasearch/lite";
 import { useState, useEffect } from "react";
-import { InstantSearch, SearchBox } from "react-instantsearch-dom";
+import { InstantSearch, SearchBox, Pagination } from "react-instantsearch-dom";
 
 // Components
 import Content from "../components/Content/Content";
@@ -96,6 +96,7 @@ export default function Home() {
                     <article>
                         <Content data={{ cart, addItemtHandler, removeItemHandler }} />
                     </article>
+                    <Pagination showLast />
                 </InstantSearch>
             </main>
 
