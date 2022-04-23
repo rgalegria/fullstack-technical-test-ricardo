@@ -1,7 +1,8 @@
 import {
   Injectable,
-  NotImplementedException,
+  BadRequestException,
   NotFoundException,
+  NotImplementedException,
 } from '@nestjs/common';
 const { v4: uuidv4 } = require('uuid');
 
@@ -22,6 +23,14 @@ export class CartService {
   // Use this array as your database
   private carts: Cart[] = [];
 
+  private findCart(id: string): [Cart, number] {
+    const cartIndex = this.carts.findIndex(({ id }) => id === id);
+    const foundCart = this.carts[cartIndex];
+
+    if (!foundCart) throw new NotImplementedException('Cart not found');
+    return [foundCart, cartIndex];
+  }
+
   create(): Cart {
     const cartId = '1';
     // const cartId = uuidv4();
@@ -30,19 +39,15 @@ export class CartService {
   }
 
   getCart(id: string): Cart {
-    const cart = this.carts.find(({ id }) => id === id);
-    if (!cart) throw new NotFoundException('cart not found');
+    const cart = this.findCart(id)[0];
+    if (!cart) throw new NotFoundException('Cart not found');
     else return this.carts.find(({ id }) => id === id);
   }
 
-  putItem(id: string, item: Item): Cart {
-    throw new NotImplementedException();
-  }
-
   insertItems(id: string, items: Item[]): Cart {
-    const cart = this.carts.find(({ id }) => id === id);
+    const [cart, index] = this.findCart(id);
 
-    items.forEach((item, index) => {
+    items.forEach((item) => {
       this.carts[index].items.push(item);
     });
 
@@ -50,16 +55,17 @@ export class CartService {
   }
 
   removeItems(id: string, items: Item[]): Cart {
-    const cart = this.carts.find(({ id }) => id === id);
+    const [cart, index] = this.findCart(id);
+    if (items.length === 0) throw new BadRequestException('No items to delete');
+    if (!cart) throw new NotFoundException('Cart not found');
+    if (cart.items.length === 0) throw new NotFoundException('Empty cart');
 
-    if (!cart) throw new NotFoundException('cart not found');
-
-    items.forEach((deleteItem, index) => {
+    items.forEach((deleteItem) => {
       const itemIndex = this.carts[index].items.findIndex(
         ({ id }) => deleteItem.id === id,
       );
 
-      if (itemIndex === -1) throw new NotFoundException('Item not found');
+      if (itemIndex === -1) return;
       else this.carts[index].items.splice(itemIndex, 1);
     });
 
