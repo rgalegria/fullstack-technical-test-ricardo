@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+// Styles
+import styles from "../../styles/Hit.module.css";
+
 const Hit = ({ hit, functions }) => {
     const [item] = useState({
         id: hit.objectID,
@@ -14,24 +17,24 @@ const Hit = ({ hit, functions }) => {
 
     if (functions.cart.items.length === 0 || !hasItem)
         button = (
-            <button id="add" onClick={() => functions.addItemtHandler(item)}>
+            <button id="add" className={styles.add_btn} onClick={() => functions.addItemtHandler(item)}>
                 Ajouter
             </button>
         );
     else
         button = (
-            <button id="remove" onClick={() => functions.removeItemHandler(item)}>
+            <button id="remove" className={styles.remove_btn} onClick={() => functions.removeItemHandler(item)}>
                 Supprimer
             </button>
         );
 
     return (
-        <section>
-            <div>
-                <img src={hit.image} />
+        <section key={hit.objectID} className={styles.section}>
+            <div className={styles.img_container}>
+                <img className={styles.img} src={hit.image} />
             </div>
-            <h4>{hit.name}</h4>
-            <p>{hit.salePrice}</p>
+            <h4 className={styles.title}>{hit.name}</h4>
+            <p className={styles.price}>{hit.salePrice}</p>
             {button}
         </section>
     );

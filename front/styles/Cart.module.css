@@ -1,0 +1,33 @@
+.container {
+    width: 75%;
+    margin: auto;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.cart_item {
+    display: inherit;
+    height: 5rem;
+    border-bottom: 1px solid gray;
+}
+
+.item_title {
+    margin: auto 0 auto 2rem;
+    width: 90%;
+}
+
+.item_price {
+    margin: auto 2rem auto auto;
+    width: 10%;
+    text-align: end;
+}
+
+.total {
+    text-align: end;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-right: 2rem;
+}

@@ -1,0 +1,45 @@
+.section {
+    display: flex;
+    flex-direction: column;
+}
+
+.img_container {
+    margin: auto auto 1rem auto;
+    height: 50%;
+}
+
+.img {
+    display: block;
+    width: 100%;
+}
+
+.title {
+    margin: 0;
+}
+
+.price {
+    text-align: right;
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin: 1rem 0;
+}
+
+.add_btn {
+    background-color: #10a700;
+    font-weight: bold;
+    padding: 0.5rem;
+    border: 0;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+}
+
+.remove_btn {
+    background-color: #a70000;
+    font-weight: bold;
+    padding: 0.5rem;
+    border: 0;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+}
