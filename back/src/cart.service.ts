@@ -1,4 +1,8 @@
-import { Injectable, NotImplementedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotImplementedException,
+  NotFoundException,
+} from '@nestjs/common';
 const { v4: uuidv4 } = require('uuid');
 
 export type Cart = {
@@ -26,7 +30,9 @@ export class CartService {
   }
 
   getCart(id: string): Cart {
-    return this.carts.find(({ id }) => id === id);
+    const cart = this.carts.find(({ id }) => id === id);
+    if (!cart) throw new NotFoundException('cart not found');
+    else return this.carts.find(({ id }) => id === id);
   }
 
   putItem(id: string, item: Item): Cart {
@@ -38,6 +44,23 @@ export class CartService {
 
     items.forEach((item, index) => {
       this.carts[index].items.push(item);
+    });
+
+    return cart;
+  }
+
+  removeItems(id: string, items: Item[]): Cart {
+    const cart = this.carts.find(({ id }) => id === id);
+
+    if (!cart) throw new NotFoundException('cart not found');
+
+    items.forEach((deleteItem, index) => {
+      const itemIndex = this.carts[index].items.findIndex(
+        ({ id }) => deleteItem.id === id,
+      );
+
+      if (itemIndex === -1) throw new NotFoundException('Item not found');
+      else this.carts[index].items.splice(itemIndex, 1);
     });
 
     return cart;
