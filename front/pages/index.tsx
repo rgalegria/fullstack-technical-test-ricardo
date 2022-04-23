@@ -27,7 +27,7 @@ export default function Home() {
                 }).then((res) => res.json());
                 setCart(cartData);
             } catch (err) {
-                console.log(err);
+                console.log("[Fetch Cart Error] =>", err);
             }
         };
         fetchCart();
@@ -38,11 +38,46 @@ export default function Home() {
     }, [cart, setCart]);
 
     const addItemtHandler = async (item) => {
-        console.log("add click", item);
+        const hasItem = cart.items.find((element) => element.id === item.id);
+        if (hasItem) return;
+
+        try {
+            const cartData = await fetch("http://localhost:4000/cart/" + cart.id, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ items: [item] })
+            });
+
+            if (cartData.ok)
+                setCart((prevCart) => ({
+                    id: prevCart.id,
+                    items: [...prevCart.items, item]
+                }));
+        } catch (err) {
+            console.log("[Add Item Error] =>", err);
+        }
     };
 
     const removeItemHandler = async (item) => {
-        console.log("remove click", item);
+        if (cart.items.length === 0) return;
+
+        const hasItem = cart.items.find((element) => element.id === item.id);
+        if (!hasItem) return;
+
+        try {
+            const updatedCart = await fetch("http://localhost:4000/cart/" + cart.id, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ items: [item] })
+            }).then((res) => res.json());
+            setCart(updatedCart);
+        } catch (err) {
+            console.log("[Remove Item Error] =>", err);
+        }
     };
 
     return (
