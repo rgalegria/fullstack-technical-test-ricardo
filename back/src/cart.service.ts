@@ -33,7 +33,13 @@ export class CartService {
     throw new NotImplementedException();
   }
 
-  putItems(id: string, items: Item[]): Cart {
-    throw new NotImplementedException();
+  insertItems(id: string, items: Item[]): Cart {
+    const cart = this.carts.find(({ id }) => id === id);
+
+    items.forEach((item, index) => {
+      this.carts[index].items.push(item);
+    });
+
+    return cart;
   }
 }
