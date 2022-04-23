@@ -32,8 +32,7 @@ export class CartService {
   }
 
   create(): Cart {
-    const cartId = '1';
-    // const cartId = uuidv4();
+    const cartId = uuidv4();
     this.carts.push({ id: cartId, items: [] });
     return this.carts.find(({ id }) => id === id);
   }
