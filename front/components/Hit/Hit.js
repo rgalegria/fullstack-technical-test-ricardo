@@ -8,6 +8,23 @@ const Hit = ({ hit, functions }) => {
         img: hit.image
     });
 
+    let button;
+
+    const hasItem = functions.cart.items.find((item) => item.id === hit.objectID);
+
+    if (functions.cart.items.length === 0 || !hasItem)
+        button = (
+            <button id="add" onClick={() => functions.addItemtHandler(item)}>
+                Ajouter
+            </button>
+        );
+    else
+        button = (
+            <button id="remove" onClick={() => functions.removeItemHandler(item)}>
+                Supprimer
+            </button>
+        );
+
     return (
         <section>
             <div>
@@ -15,12 +32,7 @@ const Hit = ({ hit, functions }) => {
             </div>
             <h4>{hit.name}</h4>
             <p>{hit.salePrice}</p>
-            <button id="add" onClick={() => functions.addItemtHandler(item)}>
-                Ajouter
-            </button>
-            <button id="remove" onClick={() => functions.removeItemHandler(item)}>
-                Supprimer
-            </button>
+            {button}
         </section>
     );
 };
