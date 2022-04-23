@@ -13,7 +13,8 @@ export class CartController {
 
   @Post('/')
   createCart(): Cart {
-    return this.cartService.create();
+    const createdCart = this.cartService.create();
+    return createdCart;
   }
 
   @Post('/:id')

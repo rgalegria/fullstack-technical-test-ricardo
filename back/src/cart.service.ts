@@ -1,5 +1,5 @@
 import { Injectable, NotImplementedException } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
+const { v4: uuidv4 } = require('uuid');
 
 export type Cart = {
   id: string;
@@ -8,7 +8,9 @@ export type Cart = {
 
 export type Item = {
   id: string;
-  quantity: number;
+  title: string;
+  price: number;
+  img: string;
 };
 
 @Injectable()
@@ -17,7 +19,10 @@ export class CartService {
   private carts: Cart[] = [];
 
   create(): Cart {
-    throw new NotImplementedException();
+    const cartId = uuidv4();
+    this.carts.push({ id: cartId, items: [] });
+
+    return this.carts.find(({ id }) => id === id);
   }
 
   getCart(id: string): Cart {
