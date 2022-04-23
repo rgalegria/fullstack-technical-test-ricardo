@@ -19,14 +19,14 @@ export class CartService {
   private carts: Cart[] = [];
 
   create(): Cart {
-    const cartId = uuidv4();
+    const cartId = '1';
+    // const cartId = uuidv4();
     this.carts.push({ id: cartId, items: [] });
-
     return this.carts.find(({ id }) => id === id);
   }
 
   getCart(id: string): Cart {
-    throw new NotImplementedException();
+    return this.carts.find(({ id }) => id === id);
   }
 
   putItem(id: string, item: Item): Cart {
