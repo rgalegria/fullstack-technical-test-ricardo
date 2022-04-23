@@ -1,13 +1,16 @@
-import { Hits } from "react-instantsearch-dom";
+import { connectHits } from "react-instantsearch-dom";
 
 // Components
-import Hit from "../../components/Hit/Hit";
+import Hits from "../../components/Hits/Hits";
+const CustomHits = connectHits(Hits);
 
-const Content = () => {
+const Content = (props) => {
     return (
-        <div>
-            <Hits hitComponent={Hit} />
-        </div>
+        <>
+            <div>
+                <CustomHits functions={props.data} />
+            </div>
+        </>
     );
 };
 

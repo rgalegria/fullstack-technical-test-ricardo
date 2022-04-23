@@ -3,6 +3,9 @@ import algoliasearch from "algoliasearch/lite";
 import { useState, useEffect } from "react";
 import { InstantSearch, SearchBox } from "react-instantsearch-dom";
 
+// Components
+import Content from "../components/Content/Content";
+
 // Styles
 import styles from "../styles/Home.module.css";
 
@@ -34,6 +37,14 @@ export default function Home() {
         console.log("cart", cart);
     }, [cart, setCart]);
 
+    const addItemtHandler = async (item) => {
+        console.log("add click", item);
+    };
+
+    const removeItemHandler = async (item) => {
+        console.log("remove click", item);
+    };
+
     return (
         <div className={styles.container}>
             <Head>
@@ -47,6 +58,9 @@ export default function Home() {
                     <header>
                         <SearchBox translations={{ placeholder: "Barre de recherche" }} />
                     </header>
+                    <article>
+                        <Content data={{ cart, addItemtHandler, removeItemHandler }} />
+                    </article>
                 </InstantSearch>
             </main>
 
