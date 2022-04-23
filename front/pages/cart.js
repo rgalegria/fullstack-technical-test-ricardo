@@ -10,6 +10,9 @@ const Cart = () => {
     // Loading State
     const [isLoading, setIsLoading] = useState(false);
 
+    // Cart Total
+    const [total, setTotal] = useState();
+
     // Fetch Initial
     useEffect(() => {
         const fetchCart = async () => {
@@ -28,6 +31,19 @@ const Cart = () => {
         fetchCart();
     }, []);
 
+    useEffect(() => {
+        if (cart && cart.items.length !== 0) {
+            const addCart = () => {
+                let total = 0;
+                cart.items.forEach((item) => {
+                    total += item.price;
+                });
+                return total;
+            };
+            setTotal(addCart());
+        }
+    }, [cart, setCart]);
+
     let cartVew;
 
     if (cart.items.length === 0) {
@@ -41,6 +57,9 @@ const Cart = () => {
                         <p>{item.price}</p>
                     </div>
                 ))}
+                <p>
+                    Total : <span>{total}</span>
+                </p>
             </div>
         );
     }
